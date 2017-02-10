@@ -8,4 +8,4 @@ gem_install_or_update "cocoapods"
 gem_install_or_update "fastlane"
 gem_install_or_update "xcode-install"
 
-xcversion install 8.2.1
+xcversion install 8.2.1 || true
