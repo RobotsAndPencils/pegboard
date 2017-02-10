@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# pegs/ios
+
+set -e
+
+gem_install_or_update "cocoapods"
+gem_install_or_update "fastlane"
