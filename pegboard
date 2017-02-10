@@ -59,7 +59,10 @@ brew "git"
 brew "openssl"
 brew "rbenv"
 brew "ruby-build"
+brew "git-lfs"
 EOF
+
+git-lfs install
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
@@ -76,6 +79,7 @@ fi
 rbenv global "$ruby_version"
 rbenv shell "$ruby_version"
 gem update --system
+gem_install_or_update 'rbenv-rehash'
 gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
