@@ -1,0 +1,3 @@
+brew bundle --file=- <<EOF
+mas 'Slack', id: 803453959
+EOF

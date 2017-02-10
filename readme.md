@@ -9,11 +9,13 @@ Pegboard sets up your tools.
 
 ## Usage
 
-Run `pegboard` to setup the base tools.
+Run `./pegboard` to setup the base tools.
 
-Install additional pegs with `pegboard peg_name_one peg_name_two`. You can see a list of included pegs in the pegs/ directory.
+Install additional pegs with `./pegboard peg_name_one peg_name_two`. You can see a list of included pegs in the pegs/ directory.
 
 Pegboard is designed to be idempotent, which is a fancy way of saying that you can run it multiple times without breaking anything. It tries to "install or update" whenever it can, which means there's only one thing you need to run to get your development environment going and keep it that way.
+
+You can set up your own tools in a `~/.peg.local` file that will be run after all other pegs finish. There's an example .peg.local file included in this repo.
 
 ## Contributing
 
