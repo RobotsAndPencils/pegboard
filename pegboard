@@ -116,10 +116,11 @@ bundle config --global jobs $((number_of_cores - 1))
 for peg in "$@"
 do
     fancy_echo "Adding peg $peg..."
-    if [ -f "$PWD/pegs/$peg" ]; then
-        . "$PWD/pegs/$peg"
+    source_dir=$(dirname "$BASH_SOURCE[0]")
+    if [ -f "$source_dir/pegs/$peg" ]; then
+        . "$source_dir/pegs/$peg"
     else
-        echo "pegs/$peg not found"
+        echo "$source_dir/pegs/$peg not found"
     fi
 done
 
