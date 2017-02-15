@@ -8,4 +8,10 @@ gem_install_or_update "cocoapods"
 gem_install_or_update "fastlane"
 gem_install_or_update "xcode-install"
 
-xcversion install 8.2.1 || true
+# Ignore "already installed" failures
+xcode_install_output="$(xcversion install 8.2.1)"
+xcode_install_status=$?
+echo "$xcode_install_output"
+if [[ $xcode_install_status != 0 && $xcode_install_output != *"already installed"* ]]; then
+  exit $xcode_install_status
+fi
