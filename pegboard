@@ -8,6 +8,31 @@ fancy_echo() {
   printf "\n$fmt\n" "$@"
 }
 
+append_to_shell_conf() {
+  local text="$1" conf_path
+  local skip_new_line="${2:-0}"
+
+  if [[ $SHELL == *"zsh"* ]]; then
+    conf_path="$HOME/.zshrc"
+  elif [[ $SHELL == *"bash"* ]]; then
+    conf_path="$HOME/.bash_profile"
+  else
+    echo "Only bash and zsh are supported by pegboard right now. Pegboard was unable to determine that you're using one of these shells. You'll need to manually add configuration to your shell's conf file."
+    return
+  fi
+
+  if ! grep -Fqs "$text" "$conf_path"; then
+    echo "Appending to $conf_path"
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\n" "$text" >> "$conf_path"
+    else
+      printf "\n%s\n" "$text" >> "$conf_path"
+    fi
+  else
+    echo "Skipping append to $conf_path, text already exists"
+  fi
+}
+
 set -e
 
 fancy_echo "Creating ~/.bin..."
@@ -43,6 +68,9 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
+    append_to_shell_conf '# recommended by brew doctor'
+    append_to_shell_conf 'export PATH="/usr/local/bin:$PATH"' 1
+
     export PATH="/usr/local/bin:$PATH"
 fi
 
@@ -70,6 +98,7 @@ find_latest_ruby() {
 }
 
 ruby_version="$(find_latest_ruby)"
+append_to_shell_conf 'eval "$(rbenv init -)"' 1
 eval "$(rbenv init -)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
