@@ -88,6 +88,7 @@ brew "openssl"
 brew "rbenv"
 brew "ruby-build"
 brew "git-lfs"
+cask "keybase"
 EOF
 
 git-lfs install
